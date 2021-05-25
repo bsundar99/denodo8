@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_database AS SELECT DISTINCT database_name AS database_name FROM get_elements() WHERE database_name is not null  CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW bv_database
+ LAYOUT (get_elements = [20, 20, 200, 105]);
+
