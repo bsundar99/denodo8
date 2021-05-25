@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_ds_name FOLDER = '/1 - connectivity/1 - data sources/pivot' AS SELECT firstname AS firstname, unpivotregister(register(firstname)) AS unp FROM ds_name GROUP BY firstname CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW p_ds_name
+ LAYOUT (ds_name = [20, 20, 200, 85]);
+

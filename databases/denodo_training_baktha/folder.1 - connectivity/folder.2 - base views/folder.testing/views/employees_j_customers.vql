@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW employees_j_customers FOLDER = '/1 - connectivity/2 - base views/testing' AS SELECT employees.employee_id AS employee_id, employees.first_name AS first_name, employees.last_name AS last_name, employees.job_id AS job_id, employees.salary AS salary, customers.id AS id, customers.customer_code_internal AS customer_code_internal, customers.first_name AS cust_first_name, customers.last_name AS cust_last_name, customers.email AS cust_email, customers.main_country AS main_country, customers.registered_date AS registered_date FROM employees AS employees MERGE INNER JOIN customers AS customers ON employees.employee_id = customers.id  CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW employees_j_customers
+ LAYOUT (employees = [114, 102, 200, 225], customers = [499, 125, 200, 225]);
+

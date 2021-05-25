@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "bv_c##baktha_images"
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_oracle
+    SCHEMANAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.views.jdbc.bv_c##baktha_images.SCHEMANAME}' 
+    RELATIONNAME='IMAGES' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        name = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        image = 'IMAGE' :'java.sql.Blob' (OPT) (sourcetyperadix='10', sourcetypeid='2004', sourcetypename='BLOB')  NOT SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "bv_c##baktha_images" I18N us_pst (
+        id:decimal (notnull, sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
+        name:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '20'),
+        image:blob (sourcetypeid = '2004', sourcetyperadix = '10')
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    PRIMARY KEY ( 'id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "bv_c##baktha_images"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD image NOS ZERO ()
+        )
+        OUTPUTLIST (id, image, name
+        )
+        WRAPPER (jdbc "bv_c##baktha_images")
+    );
+

@@ -1,0 +1,26 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_ldap_person
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    DATASOURCENAME=ds_local_ldap
+    OBJECTCLASSES='person'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=TRUE
+    OUTPUTSCHEMA (
+        userpassword = 'userPassword' : 'java.lang.String' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_ldap_person I18N us_pst (
+        userpassword:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ldap_person(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD userpassword (any) OPT ANY
+        )
+        OUTPUTLIST (userpassword
+        )
+        WRAPPER (ldap bv_ldap_person)
+    );
+

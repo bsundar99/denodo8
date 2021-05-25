@@ -1,0 +1,26 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_mytable
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_oracle
+    SCHEMANAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.views.jdbc.bv_mytable.SCHEMANAME}' 
+    RELATIONNAME='MYTABLE' 
+    OUTPUTSCHEMA (
+        text = 'TEXT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_mytable I18N custom_ind_id (
+        text:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '20')
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_mytable(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD text (any) OPT ANY
+        )
+        OUTPUTLIST (text
+        )
+        WRAPPER (jdbc bv_mytable)
+    );
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW pivot_unpivot FOLDER = '/1 - connectivity/1 - data sources/pivot' AS SELECT p_ds_name.id AS id, p_ds_name.unpivot AS unpivot, pivotregister(p_ds_name.unpivot, 'firstname:text,sec:text,third:text') AS pivot FROM p_ds_name CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW pivot_unpivot
+ LAYOUT (p_ds_name = [20, 20, 294, 65]);
+

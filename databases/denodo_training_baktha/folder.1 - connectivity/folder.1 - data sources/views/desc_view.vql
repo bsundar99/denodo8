@@ -1,0 +1,62 @@
+﻿CREATE OR REPLACE WRAPPER JDBC desc_view
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_vdp
+    SQLSENTENCE='desc view @view'   
+    OUTPUTSCHEMA (
+        fieldname = 'fieldname' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        fieldtype = 'fieldtype' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        fieldtypecode = 'fieldTypeCode' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        fieldprecision = 'fieldPrecision' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        fielddecimals = 'fieldDecimals' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        fieldradix = 'fieldRadix' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        isprimarykey = 'isPrimaryKey' :'java.lang.Boolean' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='16', sourcetypename='BOOLEAN')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        isnotnull = 'isNotNull' :'java.lang.Boolean' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='16', sourcetypename='BOOLEAN')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        isunique = 'isUnique' :'java.lang.Boolean' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='16', sourcetypename='BOOLEAN')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        isautoincrement = 'isAutoincrement' :'java.lang.Boolean' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='16', sourcetypename='BOOLEAN')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        isgeneratedcolumn = 'isGeneratedColumn' :'java.lang.Boolean' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='16', sourcetypename='BOOLEAN')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        view_0 = 'VIEW' :'java.lang.String' (OBL) (DEFAULTVALUE='bv_hr_employees')  EXTERN SORTABLE
+    )
+    SOURCECONFIGURATION (
+        delegatesqlsentenceassubquery = false,
+        datainorderfieldslist = ()
+    );
+
+CREATE OR REPLACE TABLE desc_view I18N custom_ind_id (
+        fieldname:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        fieldtype:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        fieldtypecode:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        fieldprecision:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        fielddecimals:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        fieldradix:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        isprimarykey:boolean (notnull, sourcetypeid = '16', sourcetypedecimals = '0', sourcetypesize = '1'),
+        isnotnull:boolean (notnull, sourcetypeid = '16', sourcetypedecimals = '0', sourcetypesize = '1'),
+        isunique:boolean (notnull, sourcetypeid = '16', sourcetypedecimals = '0', sourcetypesize = '1'),
+        isautoincrement:boolean (notnull, sourcetypeid = '16', sourcetypedecimals = '0', sourcetypesize = '1'),
+        isgeneratedcolumn:boolean (notnull, sourcetypeid = '16', sourcetypedecimals = '0', sourcetypesize = '1'),
+        view_0:text (extern)
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD desc_view(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD fieldname NOS ZERO ()
+             ADD fieldtype NOS ZERO ()
+             ADD fieldtypecode NOS ZERO ()
+             ADD fieldprecision NOS ZERO ()
+             ADD fielddecimals NOS ZERO ()
+             ADD fieldradix NOS ZERO ()
+             ADD isprimarykey NOS ZERO ()
+             ADD isnotnull NOS ZERO ()
+             ADD isunique NOS ZERO ()
+             ADD isautoincrement NOS ZERO ()
+             ADD isgeneratedcolumn NOS ZERO ()
+             ADD view_0 (=) OBL ONE
+        )
+        OUTPUTLIST (fielddecimals, fieldname, fieldprecision, fieldradix, fieldtype, fieldtypecode, isautoincrement, isgeneratedcolumn, isnotnull, isprimarykey, isunique
+        )
+        WRAPPER (jdbc desc_view)
+    );
+

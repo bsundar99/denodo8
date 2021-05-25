@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_product FOLDER = '/1 - connectivity/2 - base views' AS SELECT bv_product.code AS code, bv_product.accessories AS accessories FROM bv_product CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW p_bv_product
+ LAYOUT (bv_product = [20, 20, 376, 225]);
+

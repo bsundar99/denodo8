@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_group_fromvql_u_bv_ldap_account_u_bv_ldap_person_expanded FOLDER = '/1 - connectivity/1 - data sources' AS SELECT cn, distinguishedname, objectcategory, description, host, l, o, ou, seealso, uid, sn, telephonenumber, userpassword FROM (SELECT * FROM bv_group_fromvql EXTENDED UNION ALL SELECT * FROM bv_ldap_account EXTENDED UNION ALL SELECT telephonenumber, description, userpassword, seealso, sn, cn FROM bv_ldap_person_expanded) CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW bv_group_fromvql_u_bv_ldap_account_u_bv_ldap_person_expanded
+ LAYOUT (bv_group_fromvql = [20, 20, 200, 85], bv_ldap_account = [270, 20, 200, 165], bv_ldap_person_expanded = [635, 86, 200, 145]);
+

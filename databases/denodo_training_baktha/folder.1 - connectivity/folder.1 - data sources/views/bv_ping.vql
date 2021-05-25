@@ -1,0 +1,36 @@
+﻿CREATE OR REPLACE WRAPPER JDBC bv_ping
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_vdp
+    SQLSENTENCE='select data_source_name, data_source_type, database_name, status, down_cause from ping_data_source() where database_name=@database_name and data_source_type =@data_source_type and data_source_name = @data_source_name'   
+    OUTPUTSCHEMA (
+        data_source_name = 'data_source_name' :'java.lang.String' (OBL) (sourcetypedecimals='0', sourcetypesize='65536', DEFAULTVALUE='''ds_mysql''', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        data_source_type = 'data_source_type' :'java.lang.String' (OBL) (sourcetypedecimals='0', sourcetypesize='65536', DEFAULTVALUE='''jdbc''', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        database_name = 'database_name' :'java.lang.String' (OBL) (sourcetypedecimals='0', sourcetypesize='65536', DEFAULTVALUE='''denodo_training''', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        status = 'status' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE,
+        down_cause = 'down_cause' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE bv_ping I18N custom_ind_id (
+        data_source_name:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        data_source_type:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        database_name:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        status:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        down_cause:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536')
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ping(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD data_source_name (=) OBL ONE
+             ADD data_source_type (=) OBL ONE
+             ADD database_name (=) OBL ONE
+             ADD status NOS ZERO ()
+             ADD down_cause NOS ZERO ()
+        )
+        OUTPUTLIST (data_source_name, data_source_type, database_name, down_cause, status
+        )
+        WRAPPER (jdbc bv_ping)
+    );
+

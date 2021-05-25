@@ -1,0 +1,45 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_user
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    DATASOURCENAME=ds_onboard_ldap
+    LDAPEXPRESSION='(&(objectclass=user))'   
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        displayname = 'displayName' : 'java.lang.String',
+        memberof = 'memberOf' : ARRAY OF (
+            memberof = 'memberOf' : REGISTER OF (
+                memberof = 'memberOf' : 'java.lang.String'
+            )
+        ),
+        samaccountname = 'sAMAccountName' : 'java.lang.String',
+        userprincipalname = 'userPrincipalName' : 'java.lang.String'
+    );
+
+CREATE OR REPLACE TYPE bv_user_memberof_memberof AS REGISTER OF (memberof:text);
+
+CREATE OR REPLACE TYPE bv_user_memberof AS ARRAY OF bv_user_memberof_memberof;
+
+CREATE OR REPLACE TABLE bv_user I18N us_pst (
+        displayname:text,
+        memberof:bv_user_memberof,
+        samaccountname:text,
+        userprincipalname:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_user(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD displayname NOS ZERO ()
+             ADD memberof NOS ZERO ()
+             ADD memberof NOS ZERO ()
+             ADD memberof.memberof NOS ZERO ()
+             ADD samaccountname NOS ZERO ()
+             ADD userprincipalname NOS ZERO ()
+        )
+        OUTPUTLIST (displayname, memberof, samaccountname, userprincipalname
+        )
+        WRAPPER (ldap bv_user)
+    );
+

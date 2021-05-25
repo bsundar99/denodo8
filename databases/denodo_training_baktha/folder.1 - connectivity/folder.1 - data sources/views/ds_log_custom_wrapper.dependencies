@@ -1,0 +1,5 @@
+﻿/databases/denodo_training_baktha/folder.1 - connectivity/1 - connectivity.vql
+/databases/denodo_training_baktha/folder.1 - connectivity/folder.1 - data sources/1 - data sources.vql
+/maps/i18n/custom_ind_id.vql
+/extensions/jars/denodo-log-customwrapper.vql
+/databases/denodo_training_baktha/folder.1 - connectivity/folder.1 - data sources/datasources/custom/ds_log_custom_wrapper.vql

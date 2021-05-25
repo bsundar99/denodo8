@@ -1,0 +1,47 @@
+﻿CREATE OR REPLACE WRAPPER JDBC bv_wo_storages
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_web_orders
+    RELATIONNAME='storages' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL(22,0)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        address = 'ADDRESS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR(150)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        city = 'CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR(50)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        postal_code = 'POSTAL_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR(20)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        country = 'COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR(70)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        country_code = 'COUNTRY_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR(20)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        latitude = 'LATITUDE' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='DOUBLE(20,10)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        longitude = 'LONGITUDE' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='DOUBLE(20,10)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    PRIMARY KEY ( 'id' )
+    INDEX 'sqlite_autoindex_storages_1' OTHER UNIQUE ( 'ID' );
+
+CREATE OR REPLACE TABLE bv_wo_storages I18N us_pst (
+        id:double (sourcetypeid = '6', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        address:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        city:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        postal_code:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        country:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        country_code:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        latitude:double (sourcetypeid = '6', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        longitude:double (sourcetypeid = '6', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000')
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_storages(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD address (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD postal_code (any) OPT ANY
+             ADD country (any) OPT ANY
+             ADD country_code (any) OPT ANY
+             ADD latitude (any) OPT ANY
+             ADD longitude (any) OPT ANY
+        )
+        OUTPUTLIST (address, city, country, country_code, id, latitude, longitude, postal_code
+        )
+        WRAPPER (jdbc bv_wo_storages)
+    );
+

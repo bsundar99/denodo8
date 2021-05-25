@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW ds_delimited_one_two_j_ds_custom FOLDER = '/1 - connectivity/2 - base views/1-delimited' AS SELECT ds_delimited_one_two.no AS no, ds_delimited_one_two.id AS id, ds_delimited_one_two.name AS name, ds_delimited_one_two.dept AS dept, ds_custom.parentfolder AS parentfolder, ds_custom.relativepath AS relativepath, ds_custom.filename AS filename, ds_custom.extension AS extension, ds_custom.fullpath AS fullpath, ds_custom.filetype AS filetype, ds_custom.hidden AS hidden, ds_custom.datemodified AS datemodified, ds_custom.canread AS canread, ds_custom.canwrite AS canwrite, ds_custom.canexecute AS canexecute, ds_custom.size AS size, ds_custom.recursive AS recursive FROM ds_delimited_one_two AS ds_delimited_one_two INNER JOIN ds_custom AS ds_custom ON ds_delimited_one_two.no = ds_custom.filename  CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW ds_delimited_one_two_j_ds_custom
+ LAYOUT (ds_delimited_one_two = [20, 20, 200, 105], ds_custom = [345, 48, 200, 225]);
+

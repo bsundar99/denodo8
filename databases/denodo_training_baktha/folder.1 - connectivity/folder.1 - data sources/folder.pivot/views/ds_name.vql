@@ -1,0 +1,20 @@
+﻿CREATE OR REPLACE TABLE ds_name I18N custom_ind_id (
+        id:int (sourcetypeid = '4'),
+        firstname:text (sourcetypeid = '12'),
+        lastname:text (sourcetypeid = '12')
+    )
+    FOLDER = '/1 - connectivity/1 - data sources/pivot'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_name(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD firstname (any) OPT ANY
+             ADD lastname (any) OPT ANY
+        )
+        OUTPUTLIST (firstname, id, lastname
+        )
+        WRAPPER (custom ds_name)
+    );
+

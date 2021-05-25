@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE bv_cbaktha_images;
+
+DEPLOY WEBSERVICE bv_cbaktha_images LOGIN = '${databases.denodo_training_baktha.webcontainer.webservices.bv_cbaktha_images.LOGIN}' PASSWORD = '${databases.denodo_training_baktha.webcontainer.webservices.bv_cbaktha_images.PASSWORD}' ${databases.denodo_training_baktha.webcontainer.webservices.bv_cbaktha_images.PASSWORD.ENCRYPTED};
+

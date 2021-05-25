@@ -1,0 +1,31 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC s_order_count
+    FOLDER = '/1 - connectivity/2 - base views/3. summaries'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.folder.3.. summaries.views.jdbc.s_order_count.SCHEMANAME}' 
+    RELATIONNAME='S_ORDER_COUNT' 
+    OUTPUTSCHEMA (
+        main_country = 'MAIN_COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE,
+        total_ord_per_country = 'TOTAL_ORD_PER_COUNTRY' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='20', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        total_products_per_country = 'TOTAL_PRODUCTS_PER_COUNTRY' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='20', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    );
+
+CREATE OR REPLACE SUMMARY VIEW s_order_count (
+        main_country:text (sourcetypeid = '2005', sourcetyperadix = '10'),
+        total_ord_per_country:long (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '20'),
+        total_products_per_country:long (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '20')
+    )
+    FOLDER = '/1 - connectivity/2 - base views/3. summaries'
+    ADD SEARCHMETHOD s_order_count(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD main_country (any) OPT ANY
+             ADD total_ord_per_country (any) OPT ANY
+             ADD total_products_per_country (any) OPT ANY
+        )
+        OUTPUTLIST (main_country, total_ord_per_country, total_products_per_country
+        )
+        WRAPPER (jdbc s_order_count)
+    )
+AS SELECT cust.main_country AS main_country, total_ord_per_country AS total_ord_per_country, total_products_per_country AS total_products_per_country FROM (SELECT cust.main_country, count(ord.order_id) AS total_ord_per_country, count(ord.id) AS total_products_per_country FROM (iv_orders AS ord INNER JOIN bv_wo_customer AS cust) INNER JOIN bv_product AS prod ON (ord.customer_code = cust.customer_code_internal AND ord.product_id = prod.productid)  GROUP BY cust.main_country ORDER BY cust.main_country ASC);
+

@@ -1,0 +1,32 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_group_new
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    DATASOURCENAME=ds_onboard_ldap
+    LDAPEXPRESSION='(&(objectclass=group))'   
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : 'java.lang.String',
+        distinguishedname = 'distinguishedName' : 'java.lang.String',
+        objectcategory = 'objectCategory' : 'java.lang.String'
+    );
+
+CREATE OR REPLACE TABLE bv_groups I18N us_pst (
+        cn:text,
+        distinguishedname:text,
+        objectcategory:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_group_new(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD objectcategory NOS ZERO ()
+        )
+        OUTPUTLIST (cn, distinguishedname, objectcategory
+        )
+        WRAPPER (ldap bv_group_new)
+    );
+

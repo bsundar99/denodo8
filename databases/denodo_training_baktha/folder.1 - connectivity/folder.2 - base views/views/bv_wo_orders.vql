@@ -1,0 +1,44 @@
+﻿CREATE OR REPLACE WRAPPER JDBC bv_wo_orders
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_web_orders
+    RELATIONNAME='orders' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='DECIMAL(22,0)')  NOT NULL NOT SORTABLE,
+        customer_code = 'CUSTOMER_CODE' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR(20)')  NOT NULL SORTABLE,
+        status = 'STATUS' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR(20)')  NOT NULL SORTABLE,
+        date_placed = 'DATE_PLACED' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='DATETIME')  NOT SORTABLE,
+        date_delivered = 'DATE_DELIVERED' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='DATETIME')  NOT SORTABLE,
+        date_closed = 'DATE_CLOSED' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='DATETIME')  NOT SORTABLE
+    )
+    PRIMARY KEY ( 'ID' )
+    INDEX 'sqlite_autoindex_orders_1' OTHER UNIQUE PRIMARY ( 'ID' );
+
+CREATE OR REPLACE TABLE bv_wo_orders I18N us_pst (
+        id:double (sourcetypeid = '6', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        customer_code:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        status:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        date_placed:timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        date_delivered:timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000'),
+        date_closed:timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000')
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    PRIMARY KEY ( 'id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_orders(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD customer_code (any) OPT ANY
+             ADD status (any) OPT ANY
+             ADD date_placed (any) OPT ANY
+             ADD date_delivered (any) OPT ANY
+             ADD date_closed (any) OPT ANY
+        )
+        OUTPUTLIST (customer_code, date_closed, date_delivered, date_placed, id, status
+        )
+        WRAPPER (jdbc bv_wo_orders)
+    )
+    ATSOURCE_THROUGH_VDP_ONLY;
+

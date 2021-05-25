@@ -1,0 +1,9 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF monitor_log
+    FOLDER = '/1 - connectivity/2 - base views/testing/delimited ds'
+    ROUTE LOCAL 'LocalConnection' '${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.folder.testing.folder.delimited ds.datasources.df.monitor_log.ROUTE.LOCAL.PATH}'
+    COLUMNDELIMITER = '\t'
+    ENDOFLINEDELIMITER = '\n'
+    BEGINDELIMITER = 'ServerName'
+    HEADER = TRUE;
+

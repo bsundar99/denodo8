@@ -1,0 +1,92 @@
+﻿CREATE OR REPLACE WRAPPER DF monitor_log
+    FOLDER = '/1 - connectivity/2 - base views/testing/delimited ds'
+    DATASOURCENAME=monitor_log
+    OUTPUTSCHEMA (
+        id_0 = '' (OPT),
+        host = 'Host' (OPT),
+        port = 'Port' (OPT),
+        id = 'Id' (OPT),
+        database_0 = 'Database' (OPT),
+        username = 'UserName' (OPT),
+        notificationtype = 'NotificationType' (OPT),
+        sessionid = 'SessionId' (OPT),
+        starttime = 'StartTime' (OPT),
+        endtime = 'EndTime' (OPT),
+        duration = 'Duration' (OPT),
+        waitingtime = 'WaitingTime' (OPT),
+        numrows = 'NumRows' (OPT),
+        state = 'State' (OPT),
+        completed = 'Completed' (OPT),
+        cache = 'Cache' (OPT),
+        query = 'Query' (OPT),
+        requesttype = 'RequestType' (OPT),
+        elements = 'Elements' (OPT),
+        useragent = 'UserAgent' (OPT),
+        accessinterface = 'AccessInterface' (OPT),
+        clientip = 'ClientIP' (OPT),
+        transactionid = 'TransactionId' (OPT),
+        webservicename = 'WebServiceName' (OPT)
+    );
+
+CREATE OR REPLACE TABLE monitor_log_without_regexp I18N custom_ind_id (
+        id_0:text,
+        host:text,
+        port:text,
+        id:text,
+        database_0:text,
+        username:text,
+        notificationtype:text,
+        sessionid:text,
+        starttime:text,
+        endtime:text,
+        duration:text,
+        waitingtime:text,
+        numrows:text,
+        state:text,
+        completed:text,
+        cache:text,
+        query:text,
+        requesttype:text,
+        elements:text,
+        useragent:text,
+        accessinterface:text,
+        clientip:text,
+        transactionid:text,
+        webservicename:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/testing/delimited ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD monitor_log(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD id_0 (any) OPT ANY
+             ADD host (any) OPT ANY
+             ADD port (any) OPT ANY
+             ADD id (any) OPT ANY
+             ADD database_0 (any) OPT ANY
+             ADD username (any) OPT ANY
+             ADD notificationtype (any) OPT ANY
+             ADD sessionid (any) OPT ANY
+             ADD starttime (any) OPT ANY
+             ADD endtime (any) OPT ANY
+             ADD duration (any) OPT ANY
+             ADD waitingtime (any) OPT ANY
+             ADD numrows (any) OPT ANY
+             ADD state (any) OPT ANY
+             ADD completed (any) OPT ANY
+             ADD cache (any) OPT ANY
+             ADD query (any) OPT ANY
+             ADD requesttype (any) OPT ANY
+             ADD elements (any) OPT ANY
+             ADD useragent (any) OPT ANY
+             ADD accessinterface (any) OPT ANY
+             ADD clientip (any) OPT ANY
+             ADD transactionid (any) OPT ANY
+             ADD webservicename (any) OPT ANY
+        )
+        OUTPUTLIST (accessinterface, cache, clientip, completed, database_0, duration, elements, endtime, host, id, id_0, notificationtype, numrows, port, query, requesttype, sessionid, starttime, state, transactionid, useragent, username, waitingtime, webservicename
+        )
+        WRAPPER (df monitor_log)
+    );
+

@@ -1,0 +1,11 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON jgkk
+    FOLDER = '/1 - connectivity'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.denodo_training_baktha.folder.1 - connectivity.datasources.json.jgkk.ROUTE.HTTP.URL}'
+    HEADERS (
+        'Accept'='application/json', 
+        'Content-type'='application/json'
+    )
+    AUTHENTICATION OFF
+    PROXY OFF;
+

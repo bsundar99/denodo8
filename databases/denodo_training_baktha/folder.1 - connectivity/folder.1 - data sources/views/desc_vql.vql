@@ -1,0 +1,32 @@
+﻿CREATE OR REPLACE WRAPPER JDBC desc_vql
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_vdp
+    SQLSENTENCE='desc vql  database @database_name'   
+    OUTPUTSCHEMA (
+        result = 'result' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='65536', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE NOT NULL SORTABLE NOT UPDATEABLE,
+        database_name = 'DATABASE_NAME' :'java.lang.String' (OBL) (DEFAULTVALUE='denodo_training')  EXTERN SORTABLE
+    )
+    SOURCECONFIGURATION (
+        delegatesqlsentenceassubquery = false,
+        datainorderfieldslist = ()
+    );
+
+CREATE OR REPLACE TABLE desc_vql I18N custom_ind_id (
+        result:text (notnull, sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '65536'),
+        database_name:text (extern)
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD desc_vql(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD result NOS ZERO ()
+             ADD database_name (=) OBL ONE
+        )
+        OUTPUTLIST (result
+        )
+        WRAPPER (jdbc desc_vql)
+    );
+

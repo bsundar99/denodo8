@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE VIEW iv_orders FOLDER = '/2 - integration' AS SELECT customer_code, status, date_placed, date_delivered, date_closed, order_id, product_id, id FROM (SELECT id, date_placed, product_id, order_id, customer_code, date_delivered, status, date_closed FROM iv_web_orders EXTENDED UNION ALL SELECT dateclosed AS date_closed, id, customer_code, order_id, dateplaced AS date_placed, product_id, datedelivered AS date_delivered, status FROM iv_historical_orders);
+
+ALTER VIEW iv_orders
+ LAYOUT (iv_web_orders = [233, 133, 200, 185], iv_historical_orders = [661, 146, 200, 185]);
+
+ALTER VIEW iv_orders
+ DELEGATESTATSQUERY = true GET_TABLE_STATS = true ATSOURCE_THROUGH_VDP_ONLY;
+

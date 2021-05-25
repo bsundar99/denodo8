@@ -1,0 +1,41 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_ldap_person_expanded
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='person'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=TRUE
+    OUTPUTSCHEMA (
+        cn = 'cn' : 'java.lang.String' (OPT),
+        description = 'description' : 'java.lang.String' (OPT),
+        seealso = 'seeAlso' : 'java.lang.String' (OPT),
+        sn = 'sn' : 'java.lang.String' (OPT),
+        telephonenumber = 'telephoneNumber' : 'java.lang.String' (OPT),
+        userpassword = 'userPassword' : 'java.lang.String' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_ldap_person_expanded I18N us_pst (
+        cn:text,
+        description:text,
+        seealso:text,
+        sn:text,
+        telephonenumber:text,
+        userpassword:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ldap_person_expanded(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD cn (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD seealso (any) OPT ANY
+             ADD sn (any) OPT ANY
+             ADD telephonenumber (any) OPT ANY
+             ADD userpassword (any) OPT ANY
+        )
+        OUTPUTLIST (cn, description, seealso, sn, telephonenumber, userpassword
+        )
+        WRAPPER (ldap bv_ldap_person_expanded)
+    );
+

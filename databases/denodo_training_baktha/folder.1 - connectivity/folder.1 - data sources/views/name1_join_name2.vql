@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW name1_join_name2 FOLDER = '/1 - connectivity/1 - data sources' AS SELECT name1.id AS id, name1.lastname AS firstname, name1.lastname AS lastname FROM name1 AS name1 INNER JOIN name2 AS name2 ON name1.id = name2.id  CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW name1_join_name2
+ LAYOUT (name1 = [20, 20, 200, 85], name2 = [419, 8, 200, 85]);
+

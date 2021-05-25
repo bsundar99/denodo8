@@ -1,0 +1,44 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_ldap_account
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='account'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=TRUE
+    OUTPUTSCHEMA (
+        description = 'description' : 'java.lang.String' (OPT),
+        host = 'host' : 'java.lang.String' (OPT),
+        l = 'l' : 'java.lang.String' (OPT),
+        o = 'o' : 'java.lang.String' (OPT),
+        ou = 'ou' : 'java.lang.String' (OPT),
+        seealso = 'seeAlso' : 'java.lang.String' (OPT),
+        uid = 'uid' : 'java.lang.String' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_ldap_account I18N us_pst (
+        description:text,
+        host:text,
+        l:text,
+        o:text,
+        ou:text,
+        seealso:text,
+        uid:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/5.ldap'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ldap_account(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD description (any) OPT ANY
+             ADD host (any) OPT ANY
+             ADD l (any) OPT ANY
+             ADD o (any) OPT ANY
+             ADD ou (any) OPT ANY
+             ADD seealso (any) OPT ANY
+             ADD uid (any) OPT ANY
+        )
+        OUTPUTLIST (description, host, l, o, ou, seealso, uid
+        )
+        WRAPPER (ldap bv_ldap_account)
+    );
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW name2 FOLDER = '/1 - connectivity/1 - data sources' AS SELECT ds_name.id AS id, ds_name.firstname AS firstname, ds_name.lastname AS lastname FROM ds_name CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW name2
+ LAYOUT (ds_name = [20, 20, 200, 85]);
+

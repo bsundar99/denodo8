@@ -1,0 +1,36 @@
+﻿CREATE OR REPLACE REST WEBSERVICE bv_hr_employees
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, JSON)
+    RESOURCES (
+        VIEW bv_hr_employees FIELDS (
+            first_name : 'text', 
+            last_name : 'text', 
+            email : 'text', 
+            phone_number : 'text', 
+            hire_date : 'timestamp', 
+            job_id : 'text', 
+            salary : 'double', 
+            commission_pct : 'double', 
+            manager_id : 'double', 
+            department_id : 'double'
+        ),
+        VIEW bv_hr_departments FIELDS (
+            department_id : 'int', 
+            department_name : 'text', 
+            manager_id : 'int', 
+            location_id : 'int'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/1 - connectivity/2 - base views';
+

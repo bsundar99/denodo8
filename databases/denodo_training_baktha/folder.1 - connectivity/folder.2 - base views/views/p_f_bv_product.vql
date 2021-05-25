@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_f_bv_product FOLDER = '/1 - connectivity/2 - base views' AS SELECT f_bv_product.accessories_productid AS accessories_productid, f_bv_product.accessories_productname AS accessories_productname, f_bv_product.accessories_productprice AS accessories_productprice, f_bv_product.unp AS unp, pivotregister(f_bv_product.unp, 'accessories_productid:text:accessories_productname:text,accessories_productprice:text') AS piv FROM f_bv_product CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW p_f_bv_product
+ LAYOUT (f_bv_product = [20, 20, 403, 105]);
+

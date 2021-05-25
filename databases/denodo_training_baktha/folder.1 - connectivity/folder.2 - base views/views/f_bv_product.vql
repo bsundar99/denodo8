@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW f_bv_product FOLDER = '/1 - connectivity/2 - base views' AS SELECT accessories_productid AS accessories_productid, accessories_productname AS accessories_productname, accessories_productprice AS accessories_productprice, unpivotregister(register(accessories_productid, accessories_productname, accessories_productprice)) AS unp FROM FLATTEN bv_product AS v ( v.accessories) CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW f_bv_product
+ LAYOUT (bv_product = [20, 20, 365, 405]);
+

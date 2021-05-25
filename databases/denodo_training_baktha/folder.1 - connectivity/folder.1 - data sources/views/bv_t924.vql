@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_t924
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_oracle
+    SCHEMANAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.views.jdbc.bv_t924.SCHEMANAME}' 
+    RELATIONNAME='T924' 
+    OUTPUTSCHEMA (
+        c1 = 'C1' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        c2 = 'C2' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_t924 I18N us_pst (
+        c1:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '20'),
+        c2:text (sourcetypeid = '2005', sourcetyperadix = '10')
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_t924(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD c1 (any) OPT ANY
+             ADD c2 (any) OPT ANY
+        )
+        OUTPUTLIST (c1, c2
+        )
+        WRAPPER (jdbc bv_t924)
+    );
+

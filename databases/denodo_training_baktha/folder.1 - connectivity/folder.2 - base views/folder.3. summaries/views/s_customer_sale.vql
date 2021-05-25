@@ -1,0 +1,28 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC s_customer_sale
+    FOLDER = '/1 - connectivity/2 - base views/3. summaries'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.folder.3.. summaries.views.jdbc.s_customer_sale.SCHEMANAME}' 
+    RELATIONNAME='S_CUSTOMER_SALE' 
+    OUTPUTSCHEMA (
+        customer_code = 'CUSTOMER_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        total_orders = 'TOTAL_ORDERS' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='20', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    );
+
+CREATE OR REPLACE SUMMARY VIEW s_customer_sale (
+        customer_code:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '20'),
+        total_orders:long (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '20')
+    )
+    FOLDER = '/1 - connectivity/2 - base views/3. summaries'
+    ADD SEARCHMETHOD s_customer_sale(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD customer_code (any) OPT ANY
+             ADD total_orders (any) OPT ANY
+        )
+        OUTPUTLIST (customer_code, total_orders
+        )
+        WRAPPER (jdbc s_customer_sale)
+    )
+AS SELECT bv_wo_orders.customer_code AS customer_code, total_orders AS total_orders FROM (SELECT customer_code, count(*) AS total_orders FROM bv_wo_orders GROUP BY customer_code);
+

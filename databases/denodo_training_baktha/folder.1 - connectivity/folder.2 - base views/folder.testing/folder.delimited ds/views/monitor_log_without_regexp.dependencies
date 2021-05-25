@@ -1,0 +1,6 @@
+﻿/databases/denodo_training_baktha/folder.1 - connectivity/1 - connectivity.vql
+/databases/denodo_training_baktha/folder.1 - connectivity/folder.2 - base views/2 - base views.vql
+/databases/denodo_training_baktha/folder.1 - connectivity/folder.2 - base views/folder.testing/testing.vql
+/databases/denodo_training_baktha/folder.1 - connectivity/folder.2 - base views/folder.testing/folder.delimited ds/delimited ds.vql
+/maps/i18n/custom_ind_id.vql
+/databases/denodo_training_baktha/folder.1 - connectivity/folder.2 - base views/folder.testing/folder.delimited ds/datasources/df/monitor_log.vql

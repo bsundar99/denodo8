@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC phone_inc
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_mysql
+    CATALOGNAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.views.jdbc.phone_inc.CATALOGNAME}' 
+    RELATIONNAME='phone_inc' 
+    OUTPUTSCHEMA (
+        pinc_id = 'pinc_id' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  NOT NULL SORTABLE,
+        description = 'description' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        ttime = 'ttime' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  NOT NULL SORTABLE,
+        taxid = 'taxId' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='15', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        inc_type = 'inc_type' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        specific_field3 = 'specific_field3' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE phone_inc I18N custom_ind_id (
+        pinc_id:long (notnull, sourcetypeid = '-5', sourcetyperadix = '10', sourcetypesize = '19', description = ''),
+        description:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = ''),
+        ttime:timestamp (notnull, sourcetypeid = '93', sourcetyperadix = '10', sourcetypesize = '19', description = ''),
+        taxid:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '15', description = ''),
+        inc_type:long (sourcetypeid = '-5', sourcetyperadix = '10', sourcetypesize = '19', description = ''),
+        specific_field3:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100', description = '')
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD phone_inc(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD pinc_id (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD ttime (any) OPT ANY
+             ADD taxid (any) OPT ANY
+             ADD inc_type (any) OPT ANY
+             ADD specific_field3 (any) OPT ANY
+        )
+        OUTPUTLIST (description, inc_type, pinc_id, specific_field3, taxid, ttime
+        )
+        WRAPPER (jdbc phone_inc)
+    )
+    ATSOURCE_THROUGH_VDP_ONLY;
+

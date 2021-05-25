@@ -1,0 +1,13 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE CUSTOM ds_log_custom_wrapper
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CLASSNAME='com.denodo.connect.log.LogCustomWrapper'
+    JARS 'denodo-log-customwrapper'
+    PARAMETERS (
+      'Date Pattern' = '${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.datasources.custom.ds_log_custom_wrapper.Date Pattern}',
+      'Date Extractor Pattern' = '${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.datasources.custom.ds_log_custom_wrapper.Date Extractor Pattern}',
+      'Content Extractor Pattern' = '${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.datasources.custom.ds_log_custom_wrapper.Content Extractor Pattern}',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.datasources.custom.ds_log_custom_wrapper.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = ${databases.denodo_training_baktha.folder.1 - connectivity.folder.1 - data sources.datasources.custom.ds_log_custom_wrapper.Sequential Search Interval}
+    );
+

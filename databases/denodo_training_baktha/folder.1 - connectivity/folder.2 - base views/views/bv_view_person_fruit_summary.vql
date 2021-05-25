@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_view_person_fruit_summary
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_mysql
+    CATALOGNAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.views.jdbc.bv_view_person_fruit_summary.CATALOGNAME}' 
+    RELATIONNAME='person_fruit_summary' 
+    OUTPUTSCHEMA (
+        pfs_person_id = 'pfs_person_id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  NOT NULL SORTABLE,
+        pfs_person_name = 'pfs_person_name' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='1000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        pfs_fruit_name_array = 'pfs_fruit_name_array' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='1073741824', description='', sourcetypeid='-1', sourcetypename='JSON')  NOT SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_view_person_fruit_summary I18N us_pst (
+        pfs_person_id:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypesize = '10', description = ''),
+        pfs_person_name:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '1000', description = ''),
+        pfs_fruit_name_array:text (sourcetypeid = '-1', sourcetyperadix = '10', sourcetypesize = '1073741824', description = '')
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_view_person_fruit_summary(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD pfs_person_id (any) OPT ANY
+             ADD pfs_person_name (any) OPT ANY
+             ADD pfs_fruit_name_array (any) OPT ANY
+        )
+        OUTPUTLIST (pfs_fruit_name_array, pfs_person_id, pfs_person_name
+        )
+        WRAPPER (jdbc bv_view_person_fruit_summary)
+    );
+

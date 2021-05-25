@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_ds_delimited_one_two FOLDER = '/1 - connectivity/1 - data sources' AS SELECT ds_delimited_one_two.no AS no, ds_delimited_one_two.id AS id, ds_delimited_one_two.name AS name, ds_delimited_one_two.dept AS dept FROM ds_delimited_one_two WHERE no = 'one.csv' CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW p_ds_delimited_one_two
+ LAYOUT (ds_delimited_one_two = [20, 20, 200, 105]);
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_groups_u_bv_user FOLDER = '/1 - connectivity/1 - data sources' AS SELECT distinguishedname AS distinguishedname FROM (SELECT distinguishedname FROM bv_groups SQL UNION ALL SELECT displayname FROM bv_user) CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW bv_groups_u_bv_user
+ LAYOUT (bv_groups = [20, 20, 200, 85], bv_user = [362, 48, 200, 105]);
+

@@ -1,0 +1,32 @@
+﻿CREATE OR REPLACE WRAPPER DF ds_delimited_one_two
+    FOLDER = '/1 - connectivity/2 - base views/1-delimited'
+    DATASOURCENAME=ds_delimited_one_two
+    OUTPUTSCHEMA (
+        no = 'no' (OBL) (DEFAULTVALUE='one.txt') EXTERN,
+        id = 'id' (OPT),
+        name = 'name' (OPT),
+        dept = 'dept' (OPT)
+    );
+
+CREATE OR REPLACE TABLE ds_delimited_one_two I18N custom_ind_id (
+        no:text (extern),
+        id:text,
+        name:text,
+        dept:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views/1-delimited'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_delimited_one_two(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD dept (any) OPT ANY
+             ADD no (=) OBL ONE
+        )
+        OUTPUTLIST (dept, id, name
+        )
+        WRAPPER (df ds_delimited_one_two)
+    );
+

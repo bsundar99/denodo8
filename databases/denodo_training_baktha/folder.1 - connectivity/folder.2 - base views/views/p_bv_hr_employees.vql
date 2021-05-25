@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_hr_employees FOLDER = '/1 - connectivity/2 - base views' AS SELECT bv_hr_employees.employee_id AS employee_id, now() AS date FROM bv_hr_employees CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW p_bv_hr_employees
+ LAYOUT (bv_hr_employees = [20, 20, 252, 245]);
+

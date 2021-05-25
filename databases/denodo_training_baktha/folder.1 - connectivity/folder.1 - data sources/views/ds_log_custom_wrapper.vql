@@ -1,0 +1,41 @@
+﻿CREATE OR REPLACE WRAPPER CUSTOM ds_log_custom_wrapper
+    FOLDER = '/1 - connectivity/1 - data sources'
+    DATASOURCENAME=ds_log_custom_wrapper
+    OUTPUTSCHEMA (
+        out0 = 'out0' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        out1 = 'out1' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        out2 = 'out2' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        out3 = 'out3' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        extracteddate_0 = 'Extracted Date' : 'java.time.LocalDateTime' (OPT) (sourcetypeid='93')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        searchstartdate_0 = 'Search Start Date' : 'java.time.LocalDateTime' (OBL) (sourcetypeid='93')  NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        searchenddate_0 = 'Search End Date' : 'java.time.LocalDateTime' (OPT) (sourcetypeid='93')  NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE ds_log_custom_wrapper I18N custom_ind_id (
+        out0:text (sourcetypeid = '12'),
+        out1:text (sourcetypeid = '12'),
+        out2:text (sourcetypeid = '12'),
+        out3:text (sourcetypeid = '12'),
+        extracteddate_0:timestamp (notnull, sourcetypeid = '93'),
+        searchstartdate_0:timestamp (notnull, sourcetypeid = '93'),
+        searchenddate_0:timestamp (sourcetypeid = '93')
+    )
+    FOLDER = '/1 - connectivity/1 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_log_custom_wrapper(
+        I18N custom_ind_id
+        CONSTRAINTS (
+             ADD extracteddate_0 (any) OPT ANY
+             ADD searchenddate_0 (any) OPT ANY
+             ADD out0 NOS ZERO ()
+             ADD out1 NOS ZERO ()
+             ADD out2 NOS ZERO ()
+             ADD out3 NOS ZERO ()
+             ADD searchstartdate_0 (=) OBL ONE
+        )
+        OUTPUTLIST (extracteddate_0, out0, out1, out2, out3, searchenddate_0, searchstartdate_0
+        )
+        WRAPPER (custom ds_log_custom_wrapper)
+    );
+

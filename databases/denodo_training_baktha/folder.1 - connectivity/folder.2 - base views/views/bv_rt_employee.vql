@@ -1,0 +1,57 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_rt_employee
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_human_resources
+    SCHEMANAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.views.jdbc.bv_rt_employee.SCHEMANAME}' 
+    RELATIONNAME='RT_EMPLOYEE' 
+    OUTPUTSCHEMA (
+        employee_id = 'EMPLOYEE_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypesize='126', sourcetypeid='6', sourcetypename='FLOAT')  SORTABLE,
+        first_name = 'FIRST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE,
+        last_name = 'LAST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE,
+        email = 'EMAIL' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE,
+        phone_number = 'PHONE_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE,
+        hire_date = 'HIRE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='10', sourcetypesize='11', sourcetypeid='1111', sourcetypename='TIMESTAMP(9)')  SORTABLE,
+        job_id = 'JOB_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypeid='2005', sourcetypename='CLOB')  NOT SORTABLE,
+        salary = 'SALARY' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypesize='126', sourcetypeid='6', sourcetypename='FLOAT')  SORTABLE,
+        commission_pct = 'COMMISSION_PCT' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypesize='126', sourcetypeid='6', sourcetypename='FLOAT')  SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypesize='126', sourcetypeid='6', sourcetypename='FLOAT')  SORTABLE,
+        department_id = 'DEPARTMENT_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypesize='126', sourcetypeid='6', sourcetypename='FLOAT')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_rt_employee I18N us_pst (
+        employee_id:double (sourcetypeid = '8', sourcetyperadix = '10', sourcetypesize = '126'),
+        first_name:text (sourcetypeid = '2005', sourcetyperadix = '10'),
+        last_name:text (sourcetypeid = '2005', sourcetyperadix = '10'),
+        email:text (sourcetypeid = '2005', sourcetyperadix = '10'),
+        phone_number:text (sourcetypeid = '2005', sourcetyperadix = '10'),
+        hire_date:timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypedecimals = '9', sourcetypesize = '11'),
+        job_id:text (sourcetypeid = '2005', sourcetyperadix = '10'),
+        salary:double (sourcetypeid = '8', sourcetyperadix = '10', sourcetypesize = '126'),
+        commission_pct:double (sourcetypeid = '8', sourcetyperadix = '10', sourcetypesize = '126'),
+        manager_id:double (sourcetypeid = '8', sourcetyperadix = '10', sourcetypesize = '126'),
+        department_id:double (sourcetypeid = '8', sourcetyperadix = '10', sourcetypesize = '126')
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_rt_employee(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD employee_id (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD phone_number (any) OPT ANY
+             ADD hire_date (any) OPT ANY
+             ADD job_id (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD commission_pct (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD department_id (any) OPT ANY
+        )
+        OUTPUTLIST (commission_pct, department_id, email, employee_id, first_name, hire_date, job_id, last_name, manager_id, phone_number, salary
+        )
+        WRAPPER (jdbc bv_rt_employee)
+    )
+    DATA_LOAD_QUERY = 'select * from bv_hr_employees';
+

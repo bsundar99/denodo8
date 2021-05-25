@@ -1,0 +1,20 @@
+﻿CREATE OR REPLACE TABLE bv_sample_excel I18N us_pst (
+        id:double (sourcetypeid = '8'),
+        name:text (sourcetypeid = '12'),
+        dept:text (sourcetypeid = '12')
+    )
+    FOLDER = '/1 - connectivity/2 - base views/2-excel'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_sample_excel(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD dept (any) OPT ANY
+        )
+        OUTPUTLIST (dept, id, name
+        )
+        WRAPPER (custom ds_sample_excel)
+    );
+

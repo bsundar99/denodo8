@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_user_roles_c FOLDER = '/1 - connectivity/2 - base views/5.ldap' AS SELECT bv_user_flatten.displayname AS displayname, count(bv_user_flatten.displayname) AS roles FROM bv_user_flatten AS bv_user_flatten INNER JOIN bv_groups AS bv_groups ON bv_user_flatten.memberof = bv_groups.distinguishedname  WHERE bv_user_flatten.displayname is not null  GROUP BY bv_user_flatten.displayname;
+
+ALTER VIEW dv_user_roles_c
+ LAYOUT (bv_user_flatten = [280, 40, 200, 105], bv_groups = [640, 40, 200, 85]);
+

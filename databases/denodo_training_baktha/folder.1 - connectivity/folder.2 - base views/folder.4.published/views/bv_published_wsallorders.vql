@@ -1,0 +1,84 @@
+﻿CREATE OR REPLACE WRAPPER XML bv_published_wsallorders
+    FOLDER = '/1 - connectivity/2 - base views/4.published'
+    DATASOURCENAME=ds_published_wsallorders
+    TUPLEROOT '/denodo:view/bv_product'
+    OUTPUTSCHEMA (denodoview_0 = 'denodo:view' : REGISTER OF (
+        name = '#name' : 'java.lang.String',
+        description = 'denodo:view.bv_product.description' : 'java.lang.String',
+        warnings = 'denodo:view.bv_product.warnings' : 'java.lang.String',
+        numresults = 'denodo:view.bv_product.numresults' : 'java.lang.Short',
+        productid = 'denodo:view.bv_product.productid' : 'java.lang.Short',
+        productname = 'denodo:view.bv_product.productname' : 'java.lang.String',
+        productprice = 'denodo:view.bv_product.productprice' : 'java.lang.Float',
+        category = 'denodo:view.bv_product.category' : REGISTER OF (
+            categoryid = 'categoryid' : 'java.lang.Short',
+            categoryname = 'categoryname' : 'java.lang.String'
+        ),
+        characteristics = 'denodo:view.bv_product.characteristics' : REGISTER OF (
+            characteristic_dimensions = 'characteristic_dimensions' : 'java.lang.String',
+            characteristic_weight = 'characteristic_weight' : 'java.lang.String',
+            characteristic_details = 'characteristic_details' : 'java.lang.String',
+            characteristic_color = 'characteristic_color' : 'java.lang.String'
+        ),
+        accessories = 'denodo:view.bv_product.accessories' : ARRAY OF (
+            accessories = 'accessories' : REGISTER OF (
+                productid = 'productid' : 'java.lang.Short',
+                productname = 'productname' : 'java.lang.String',
+                productprice = 'productprice' : 'java.lang.Float'
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE dd_category AS REGISTER OF (categoryid:int, categoryname:text);
+
+CREATE OR REPLACE TYPE dd_characteristics AS REGISTER OF (characteristic_dimensions:text, characteristic_weight:text, characteristic_details:text, characteristic_color:text);
+
+CREATE OR REPLACE TYPE dd_accessories_accessories AS REGISTER OF (productid:int, productname:text, productprice:float);
+
+CREATE OR REPLACE TYPE dd_accessories AS ARRAY OF dd_accessories_accessories;
+
+CREATE OR REPLACE TABLE bv_published_wsallorders I18N us_pst (
+        name:text,
+        description:text,
+        warnings:text,
+        numresults:int,
+        productid:int,
+        productname:text,
+        productprice:float,
+        category:dd_category,
+        characteristics:dd_characteristics,
+        accessories:dd_accessories
+    )
+    FOLDER = '/1 - connectivity/2 - base views/4.published'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_published_wsallorders(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD name NOS ZERO ()
+             ADD description NOS ZERO ()
+             ADD warnings NOS ZERO ()
+             ADD numresults NOS ZERO ()
+             ADD productid NOS ZERO ()
+             ADD productname NOS ZERO ()
+             ADD productprice NOS ZERO ()
+             ADD category NOS ZERO ()
+             ADD category.categoryid NOS ZERO ()
+             ADD category.categoryname NOS ZERO ()
+             ADD characteristics NOS ZERO ()
+             ADD characteristics.characteristic_dimensions NOS ZERO ()
+             ADD characteristics.characteristic_weight NOS ZERO ()
+             ADD characteristics.characteristic_details NOS ZERO ()
+             ADD characteristics.characteristic_color NOS ZERO ()
+             ADD accessories NOS ZERO ()
+             ADD accessories NOS ZERO ()
+             ADD accessories.productid NOS ZERO ()
+             ADD accessories.productname NOS ZERO ()
+             ADD accessories.productprice NOS ZERO ()
+        )
+        OUTPUTLIST (accessories, category, characteristics, description, name, numresults, productid, productname, productprice, warnings
+        )
+        WRAPPER (xml bv_published_wsallorders)
+    );
+

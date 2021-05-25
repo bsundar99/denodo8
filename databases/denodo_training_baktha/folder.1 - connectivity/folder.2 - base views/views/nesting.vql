@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW nesting FOLDER = '/1 - connectivity/2 - base views' AS SELECT employee_id AS employee_id, job_id AS job_id, nest(employee_id, job_id) AS ids, nest(nest(employee_id, job_id), employee_id) AS nest_ids FROM bv_hr_employees GROUP BY employee_id, job_id CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW nesting
+ LAYOUT (bv_hr_employees = [20, 20, 252, 245]);
+

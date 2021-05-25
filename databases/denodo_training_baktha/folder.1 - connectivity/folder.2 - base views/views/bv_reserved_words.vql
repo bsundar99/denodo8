@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_reserved_words
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_mysql
+    CATALOGNAME='${databases.denodo_training_baktha.folder.1 - connectivity.folder.2 - base views.views.jdbc.bv_reserved_words.CATALOGNAME}' 
+    RELATIONNAME='reserved_words' 
+    OUTPUTSCHEMA (
+        connect_0 = 'connect' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  ESCAPE SORTABLE,
+        user_0 = 'user' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        swap_0 = 'swap' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='12', description='', sourcetypeid='7', sourcetypename='FLOAT')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_reserved_words I18N us_pst (
+        connect_0:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypesize = '10', description = ''),
+        user_0:text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '10', description = ''),
+        swap_0:double (sourcetypeid = '8', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '12', description = '')
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_reserved_words(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD connect_0 (any) OPT ANY
+             ADD user_0 (any) OPT ANY
+             ADD swap_0 (any) OPT ANY
+        )
+        OUTPUTLIST (connect_0, swap_0, user_0
+        )
+        WRAPPER (jdbc bv_reserved_words)
+    );
+

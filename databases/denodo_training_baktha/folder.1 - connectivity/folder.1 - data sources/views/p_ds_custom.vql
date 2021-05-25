@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_ds_custom FOLDER = '/1 - connectivity/1 - data sources' AS SELECT ds_custom.parentfolder AS parentfolder, ds_custom.relativepath AS relativepath, ds_custom.filename AS filename, ds_custom.extension AS extension, ds_custom.fullpath AS fullpath, ds_custom.filetype AS filetype, ds_custom.hidden AS hidden, ds_custom.datemodified AS datemodified, ds_custom.canread AS canread, ds_custom.canwrite AS canwrite, ds_custom.canexecute AS canexecute, ds_custom.size AS size, ds_custom.recursive AS recursive FROM ds_custom CONTEXT ('I18N' = 'custom_ind_id');
+
+ALTER VIEW p_ds_custom
+ LAYOUT (ds_custom = [20, 20, 200, 285]);
+
