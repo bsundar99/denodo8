@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE VIEW iv_employee_seniority FOLDER = '/2 - integration' (
+    seniority (sourcetypesize = '19', sourcetypeid = '4')
+)
+ AS SELECT bv_hr_employees.employee_id AS employee_id, bv_hr_employees.first_name AS first_name, bv_hr_employees.last_name AS last_name, bv_hr_employees.hire_date AS hire_date, bv_hr_employees.salary AS salary, ((current_date()-bv_hr_employees.hire_date)/365) AS seniority FROM bv_hr_employees ORDER BY hire_date ASC;
+
+ALTER VIEW iv_employee_seniority
+ LAYOUT (bv_hr_employees = [20, 20, 200, 200]);
+

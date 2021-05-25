@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW iv_customer_employees_union FOLDER = '/2 - integration' AS SELECT first_name AS first_name, last_name AS last_name, email AS email FROM (SELECT first_name, last_name, email FROM bv_wo_customer SQL UNION ALL SELECT first_name, last_name, email FROM bv_hr_employees);
+
+ALTER VIEW iv_customer_employees_union
+ LAYOUT (bv_wo_customer = [167, 66, 200, 225], bv_hr_employees = [586, 85, 200, 225]);
+

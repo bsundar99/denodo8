@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW iv_customer_employees_extendedunion FOLDER = '/2 - integration' AS SELECT id, customer_code_internal, first_name, last_name, email, phone, main_address, main_postcode, main_country, registered_date, employee_id, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id FROM (SELECT * FROM bv_wo_customer EXTENDED UNION ALL SELECT first_name, email, manager_id, phone_number, salary, employee_id, department_id, job_id, commission_pct, last_name, hire_date FROM bv_hr_employees);
+
+ALTER VIEW iv_customer_employees_extendedunion
+ LAYOUT (bv_wo_customer = [235, 131, 200, 225], bv_hr_employees = [641, 154, 200, 225]);
+
